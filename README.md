@@ -92,12 +92,16 @@ To map a button you have to find the internal OBS key name and assign it in the 
 play = KEY:OBSBasic.StartStreaming
 ```
 
+Studio Mode and Virtual Camera are controllable by using prefix `StudioMode:` or `VirtualCam:` in the same manner, but they take the arguments `True`, `False`, or `Toggle`
+
 ##### LEDs
 
 Some buttons have LEDs which can be assigned with states in OBS, the supported states are (for now):
 
 - `StreamState`, when OBS is streaming
 - `RecordState`, when OBS is recording
+- `StudioModeState`, when StudioMode is active
+- `VirtualCamState`, when VirtualCamera is active
 
 They have to be prefixed with `STATE:`, like so:
 
