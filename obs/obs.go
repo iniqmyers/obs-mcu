@@ -333,6 +333,10 @@ func processObsMessage(event interface{}) {
 		states.SetState("StreamState", e.OutputActive)
 	case *events.RecordStateChanged:
 		states.SetState("RecordState", e.OutputActive)
+	case *events.VirtualcamStateChanged:
+		states.SetState("VirtualCamState", e.OutputActive)
+	case *events.StudioModeStateChanged:
+		states.SetState("StudioModeState", e.StudioModeEnabled)
 	case error:
 		uw := errors.Unwrap(e)
 		switch uw.(type) {

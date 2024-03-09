@@ -279,7 +279,6 @@ func receiveMidi(message midi.Message, timestamps int32) {
 							}
 							log.Printf("Send Key: %s", key)
 						}
-						break
 						//send studioMode change
 					case "StudioMode":
 						newVal := strings.Split(cmdString, ",")
@@ -293,7 +292,6 @@ func receiveMidi(message midi.Message, timestamps int32) {
 							}
 							log.Printf("StudioMode: %s", newVal)
 						}
-						break
 
 					}
 				}
