@@ -16,7 +16,7 @@ type UpdateRequest struct {
 
 // obs <- mackie
 type StudioModeRequest struct {
-	StudioModeEnabled bool
+	StudioModeEnable string
 }
 
 type VirtualCamRequest struct {

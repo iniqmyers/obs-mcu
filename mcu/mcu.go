@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/signal"
 	"reflect"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -281,12 +280,9 @@ func receiveMidi(message midi.Message, timestamps int32) {
 						}
 						//send studioMode change
 					case "StudioMode":
-						newVal, err := strconv.ParseBool(cmdString)
-						if err != nil {
-							log.Fatal(err)
-						}
+						newVal := cmdString
 						fromMcu <- msg.StudioModeRequest{
-							StudioModeEnabled: newVal,
+							StudioModeEnable: newVal,
 						}
 						log.Printf("StudioMode: %s", cmdString)
 					case "VirtualCam":

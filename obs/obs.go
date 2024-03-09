@@ -208,9 +208,23 @@ func processMcuMessage(message interface{}) {
 			log.Print(err)
 		}
 	case msg.StudioModeRequest:
-		_, err := client.Ui.SetStudioModeEnabled(&ui.SetStudioModeEnabledParams{StudioModeEnabled: &e.StudioModeEnabled})
-		if err != nil {
-			log.Print(err)
+		if *&e.StudioModeEnable == "Toggle" {
+			studioState := states.GetState("StudioModeState").State
+			studioState = !studioState
+			_, err := client.Ui.SetStudioModeEnabled(&ui.SetStudioModeEnabledParams{StudioModeEnabled: &studioState})
+			if err != nil {
+				log.Print(err)
+			}
+		} else {
+			newVal, err := strconv.ParseBool(*&e.StudioModeEnable)
+			if err == nil {
+				_, err := client.Ui.SetStudioModeEnabled(&ui.SetStudioModeEnabledParams{StudioModeEnabled: &newVal})
+				if err != nil {
+					log.Print(err)
+				}
+			} else {
+				log.Print(err)
+			}
 		}
 	case msg.VirtualCamRequest:
 		if *&e.VirtualCamEnable == "Toggle" {
