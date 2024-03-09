@@ -15,6 +15,11 @@ type UpdateRequest struct {
 }
 
 // obs <- mackie
+type StudioModeRequest struct {
+	StudioModeEnabled bool
+}
+
+// obs <- mackie
 type KeyMessage struct {
 	HotkeyName string
 }

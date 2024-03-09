@@ -19,6 +19,7 @@ import (
 	"github.com/andreykaipov/goobs/api/requests/general"
 	"github.com/andreykaipov/goobs/api/requests/inputs"
 	"github.com/andreykaipov/goobs/api/requests/scenes"
+	"github.com/andreykaipov/goobs/api/requests/ui"
 	"github.com/andreykaipov/goobs/api/typedefs"
 
 	"github.com/normen/obs-mcu/config"
@@ -201,6 +202,11 @@ func processMcuMessage(message interface{}) {
 		}
 	case msg.KeyMessage:
 		_, err := client.General.TriggerHotkeyByName(&general.TriggerHotkeyByNameParams{HotkeyName: &e.HotkeyName})
+		if err != nil {
+			log.Print(err)
+		}
+	case msg.StudioModeRequest:
+		_, err := client.Ui.SetStudioModeEnabled(&ui.SetStudioModeEnabledParams{StudioModeEnabled: &e.StudioModeEnabled})
 		if err != nil {
 			log.Print(err)
 		}

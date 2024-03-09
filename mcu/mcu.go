@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"reflect"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -278,6 +279,22 @@ func receiveMidi(message midi.Message, timestamps int32) {
 							}
 							log.Printf("Send Key: %s", key)
 						}
+						break
+						//send studioMode change
+					case "StudioMode":
+						newVal := strings.Split(cmdString, ",")
+						for _, booVal := range newVal {
+							boolVal, err := strconv.ParseBool(booVal)
+							if err != nil {
+								log.Fatal(err)
+							}
+							fromMcu <- msg.StudioModeRequest{
+								StudioModeEnabled: boolVal,
+							}
+							log.Printf("StudioMode: %s", newVal)
+						}
+						break
+
 					}
 				}
 			}
