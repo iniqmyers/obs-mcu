@@ -281,18 +281,20 @@ func receiveMidi(message midi.Message, timestamps int32) {
 						}
 						//send studioMode change
 					case "StudioMode":
-						newVal := strings.Split(cmdString, ",")
-						for _, booVal := range newVal {
-							boolVal, err := strconv.ParseBool(booVal)
-							if err != nil {
-								log.Fatal(err)
-							}
-							fromMcu <- msg.StudioModeRequest{
-								StudioModeEnabled: boolVal,
-							}
-							log.Printf("StudioMode: %s", newVal)
+						newVal, err := strconv.ParseBool(cmdString)
+						if err != nil {
+							log.Fatal(err)
 						}
-
+						fromMcu <- msg.StudioModeRequest{
+							StudioModeEnabled: newVal,
+						}
+						log.Printf("StudioMode: %s", cmdString)
+					case "VirtualCam":
+						newVal := cmdString
+						fromMcu <- msg.VirtualCamRequest{
+							VirtualCamEnable: newVal,
+						}
+						log.Printf("VirtualCamEnabled: %s", cmdString)
 					}
 				}
 			}

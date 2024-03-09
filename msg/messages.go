@@ -19,6 +19,10 @@ type StudioModeRequest struct {
 	StudioModeEnabled bool
 }
 
+type VirtualCamRequest struct {
+	VirtualCamEnable string
+}
+
 // obs <- mackie
 type KeyMessage struct {
 	HotkeyName string

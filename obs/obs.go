@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+	"strconv"
 	"sync"
 	"syscall"
 	"time"
@@ -18,6 +19,7 @@ import (
 	"github.com/andreykaipov/goobs/api/events/subscriptions"
 	"github.com/andreykaipov/goobs/api/requests/general"
 	"github.com/andreykaipov/goobs/api/requests/inputs"
+	"github.com/andreykaipov/goobs/api/requests/outputs"
 	"github.com/andreykaipov/goobs/api/requests/scenes"
 	"github.com/andreykaipov/goobs/api/requests/ui"
 	"github.com/andreykaipov/goobs/api/typedefs"
@@ -209,6 +211,38 @@ func processMcuMessage(message interface{}) {
 		_, err := client.Ui.SetStudioModeEnabled(&ui.SetStudioModeEnabledParams{StudioModeEnabled: &e.StudioModeEnabled})
 		if err != nil {
 			log.Print(err)
+		}
+	case msg.VirtualCamRequest:
+		if *&e.VirtualCamEnable == "Toggle" {
+			camState := states.GetState("VirtualCamState").State
+			if camState == true {
+				_, err := client.Outputs.StopVirtualCam(&outputs.StopVirtualCamParams{})
+				if err != nil {
+					log.Print(err)
+				}
+			} else {
+				_, err := client.Outputs.StartVirtualCam(&outputs.StartVirtualCamParams{})
+				if err != nil {
+					log.Print(err)
+				}
+			}
+		} else {
+			newVal, err := strconv.ParseBool(*&e.VirtualCamEnable)
+			if err == nil {
+				if newVal {
+					_, err := client.Outputs.StopVirtualCam(&outputs.StopVirtualCamParams{})
+					if err != nil {
+						log.Print(err)
+					}
+				} else {
+					_, err := client.Outputs.StartVirtualCam(&outputs.StartVirtualCamParams{})
+					if err != nil {
+						log.Print(err)
+					}
+				}
+			} else {
+				log.Print(err)
+			}
 		}
 	case msg.BankMessage:
 		channels.ChangeFaderBank(e.ChangeAmount)
