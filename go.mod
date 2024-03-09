@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/adrg/xdg v0.4.0
-	github.com/andreykaipov/goobs v1.1.5
+	github.com/andreykaipov/goobs v1.2.3
 	github.com/getlantern/systray v1.2.2
 	github.com/gorilla/websocket v1.5.1
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
